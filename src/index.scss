@@ -6,6 +6,10 @@ body {
   margin: 0px;
 }
 
+.hide-bg{
+  display: none !important;
+}
+
 // ========================
 // Topbar
 // ========================
@@ -33,6 +37,7 @@ body {
         display: flex;
         list-style: none;
         gap: 5px;
+        margin-bottom: 0px;
       }
     }
   }

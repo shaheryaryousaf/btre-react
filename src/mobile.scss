@@ -1,0 +1,33 @@
+@media only screen and (max-width: 600px) {
+
+    .hide-bg{
+        display: block !important;
+      }
+
+  // ========================
+  // Topbar Styles
+  // ========================
+  .topBar {
+    .infos {
+      .info {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // ========================
+  // Header Styles
+  // ========================
+  header {
+    .navbar-nav {
+      margin-left: 0px;
+      gap: 0px !important;
+    }
+
+    .auth_links{
+        display: none;
+    }
+  }
+}

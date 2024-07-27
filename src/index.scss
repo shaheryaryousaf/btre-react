@@ -1,12 +1,13 @@
 // Global Variables
 $metaColor: gray;
 $whiteColor: white;
+$background1: #273c5f;
 
 body {
   margin: 0px;
 }
 
-.hide-bg{
+.hide-bg {
   display: none !important;
 }
 
@@ -47,7 +48,7 @@ body {
 // Header Styles
 // ========================
 header {
-  background-color: #273c5f;
+  background-color: $background1;
   padding: 5px 0;
 
   .navbar-brand {
@@ -64,17 +65,29 @@ header {
     }
   }
 
-  .auth_links{
+  .auth_links {
     display: flex;
     align-items: center;
     gap: 25px;
 
-    .link{
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: $whiteColor;
-        text-decoration: none;
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: $whiteColor;
+      text-decoration: none;
     }
+  }
+}
+
+// ========================
+// Footer Styles
+// ========================
+footer {
+  background-color: $background1;
+  padding: 18px 0;
+  p {
+    font-size: 14px;
+    color: $whiteColor;
   }
 }

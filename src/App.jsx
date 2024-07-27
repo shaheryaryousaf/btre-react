@@ -1,13 +1,11 @@
 // Import Components
-import Topbar from "./components/Layout/Topbar";
-import Header from "./components/Layout/Header";
+import Layout from "./components/Layout/Layout";
 
 const App = () => {
   return (
-    <>
-      <Topbar />
-      <Header />
-    </>
+   <Layout>
+    dsadsa
+   </Layout>
   );
 };
 

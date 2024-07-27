@@ -1,5 +1,6 @@
 // Global Variables
 $metaColor: gray;
+$whiteColor: white;
 
 body {
   margin: 0px;
@@ -33,6 +34,42 @@ body {
         list-style: none;
         gap: 5px;
       }
+    }
+  }
+}
+
+// ========================
+// Header Styles
+// ========================
+header {
+  background-color: #273c5f;
+  padding: 5px 0;
+
+  .navbar-brand {
+    color: white;
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  .navbar-nav {
+    margin-left: 20px;
+    gap: 10px !important;
+    .nav-link {
+      color: white !important;
+    }
+  }
+
+  .auth_links{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    .link{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: $whiteColor;
+        text-decoration: none;
     }
   }
 }

@@ -1,8 +1,9 @@
+// Import Components
+import Topbar from "./components/Layout/Topbar";
+
 const App = () => {
   return (
-    <div className="top">
-      <div className="brand">Btre MERN</div>
-    </div>
+    <Topbar />
   );
 };
 

@@ -1,9 +1,38 @@
-body{
-    margin: 0px;
+// Global Variables
+$metaColor: gray;
+
+body {
+  margin: 0px;
 }
 
-.top{
-    .brand{
-        font-size: 44px;
+// ========================
+// Topbar
+// ========================
+.topBar {
+  padding: 12px 0;
+  .infos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      span {
+        color: $metaColor;
+        font-size: 14px;
+      }
+
+      a {
+        color: $metaColor;
+        text-decoration: none;
+      }
+
+      ul {
+        display: flex;
+        list-style: none;
+        gap: 5px;
+      }
     }
+  }
 }

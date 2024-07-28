@@ -7,6 +7,13 @@ import Button from "react-bootstrap/Button";
 
 // Import Components
 import Layout from "./components/Layout/Layout";
+import SIngleListing from "./components/listings/SIngleListing.jsx";
+
+// Import Icons
+import { FaComment, FaHome, FaBriefcase } from "react-icons/fa";
+
+// Import Dummy Data
+import { listingsData } from "./dummyData.js";
 
 const App = () => {
   return (
@@ -108,9 +115,7 @@ const App = () => {
                   </Col>
                   <Col lg={6}>
                     <Form.Select>
-                      <option selected="true" disabled="disabled">
-                        Max Price (Any)
-                      </option>
+                      <option>Max Price (Any)</option>
                       <option value="100000">$100,000</option>
                       <option value="200000">$200,000</option>
                       <option value="300000">$300,000</option>
@@ -132,6 +137,53 @@ const App = () => {
           </Col>
         </Row>
       </Container>
+
+      <Container className="listings_section py-5">
+        <Row className="mb-3">
+          <Col lg={12} className="text-center">
+            <h2>Latest Listings</h2>
+          </Col>
+        </Row>
+        <Row>
+          {listingsData.map((l, index) => (
+            <SIngleListing key={index} l={l} />
+          ))}
+        </Row>
+      </Container>
+
+      <section className="bottom_infos">
+        <Container>
+          <Row>
+            <Col lg={4}>
+              <FaComment size={56} />
+              <h3>Consulting Services</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt, debitis nam! Repudiandae, provident iste consequatur
+                hic dignissimos ratione ea quae.
+              </p>
+            </Col>
+            <Col lg={4}>
+              <FaHome size={56} />
+              <h3>Propery Management</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt, debitis nam! Repudiandae, provident iste consequatur
+                hic dignissimos ratione ea quae.
+              </p>
+            </Col>
+            <Col lg={4}>
+              <FaBriefcase size={56} />
+              <h3>Renting & Selling</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt, debitis nam! Repudiandae, provident iste consequatur
+                hic dignissimos ratione ea quae.
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </section>
     </Layout>
   );
 };

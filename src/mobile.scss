@@ -17,6 +17,18 @@
   }
 
   // ========================
+  // Page Top Styles
+  // ========================
+  .pageTop {
+    padding: 50px 20px;
+    h1 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
+  // ========================
   // Header Styles
   // ========================
   header {
@@ -57,7 +69,7 @@
     }
   }
 
-  .listings_section{
+  .listings_section {
     padding: 20px;
   }
 
@@ -68,7 +80,7 @@
     .row {
       margin-bottom: 10px;
     }
-    .btn{
+    .btn {
       margin-top: 10px;
     }
   }

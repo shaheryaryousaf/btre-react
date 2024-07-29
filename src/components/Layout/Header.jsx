@@ -6,6 +6,10 @@ import Navbar from "react-bootstrap/Navbar";
 // Import Icons
 import { FaUserPlus, FaSignOutAlt } from "react-icons/fa";
 
+// Import Libraries
+import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+
 function Header() {
   return (
     <header>
@@ -14,29 +18,32 @@ function Header() {
           <Navbar.Brand href="#">BT</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              navbarScroll
-            >
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">About Us</Nav.Link>
-              <Nav.Link href="#action2">Featured Listings</Nav.Link>
-              <Nav.Link href="#action2" className="hide-bg">
-                Register
-              </Nav.Link>
-              <Nav.Link href="#action2" className="hide-bg">
-                Login
-              </Nav.Link>
+            <Nav className="me-auto my-2 my-lg-0" navbarScroll>
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/about">
+                <Nav.Link>About Us</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/listings">
+                <Nav.Link>Featured Listing</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/register" className="hide-bg">
+                <Nav.Link>Register</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/login" className="hide-bg">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
             </Nav>
             <div className="auth_links hide-sm">
-              <a href="#" rel="noreferrer" className="link">
+              <Link to="/register" className="link">
                 <FaUserPlus />
                 <span>Register</span>
-              </a>
-              <a href="#" rel="noreferrer" className="link">
+              </Link>
+              <Link to="/login" className="link">
                 <FaSignOutAlt />
                 <span>Login</span>
-              </a>
+              </Link>
             </div>
           </Navbar.Collapse>
         </Container>

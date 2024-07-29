@@ -6,7 +6,9 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-// Import Icons
+// Import Libraries
+import { Link } from "react-router-dom";
+
 // Import Icons
 import {
   FaMapMarkerAlt,
@@ -45,7 +47,13 @@ const SingleListing = ({ l }) => {
               <span>Bathrooms: {l.bathrooms}</span>
             </Col>
           </Row>
-          <Button className="w-100">View Detail</Button>
+          <Link
+            to="/listings/1"
+            className="btn w-100"
+            style={{ color: "white" }}
+          >
+            View Detail
+          </Link>
         </Card.Body>
       </Card>
     </Col>

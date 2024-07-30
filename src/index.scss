@@ -210,3 +210,88 @@ footer {
     }
   }
 }
+
+.content {
+  .subHeading {
+    font-size: 20px;
+  }
+  img {
+    margin-bottom: 20px;
+  }
+
+  .card {
+    img {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.cta_section {
+  background-color: #343a40;
+  padding: 100px;
+  color: white;
+
+  h1 {
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 22px;
+  }
+}
+
+.realtors_list {
+  margin: 50px 0;
+
+  h3 {
+    margin-bottom: 30px;
+  }
+
+  img {
+    margin-bottom: 25px;
+  }
+
+  h5 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .info {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+.listing_detail{
+
+  margin-bottom: 50px;
+
+  .thumbnail{
+    margin-bottom: 40px;
+  }
+
+  .specs{
+    margin-bottom: 25px;
+    .list-group{
+      .list-group-item{
+        border: 0px;
+        padding: 0px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        span{
+          &:first-child{
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

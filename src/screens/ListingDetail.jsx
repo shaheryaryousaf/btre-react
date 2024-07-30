@@ -10,9 +10,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 // Import Libraries
 import { Link } from "react-router-dom";
 
-// Import Icons
-import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-
 const ListingDetail = () => {
   return (
     <>

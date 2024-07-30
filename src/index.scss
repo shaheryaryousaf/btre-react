@@ -64,6 +64,20 @@ textarea {
 }
 
 // ========================
+// Custom Form
+// ========================
+.custom_form {
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .form-control {
+    font-size: 15px;
+  }
+}
+
+// ========================
 // Breadcrumbs
 // ========================
 .breadcrumb {
@@ -211,6 +225,10 @@ footer {
   }
 }
 
+
+// ========================
+// Simple Page Styles
+// ========================
 .content {
   .subHeading {
     font-size: 20px;
@@ -226,6 +244,10 @@ footer {
   }
 }
 
+
+// ========================
+// CTA Section Style
+// ========================
 .cta_section {
   background-color: #343a40;
   padding: 100px;
@@ -242,6 +264,10 @@ footer {
   }
 }
 
+
+// ========================
+// Realtors List Style
+// ========================
 .realtors_list {
   margin: 50px 0;
 
@@ -268,26 +294,28 @@ footer {
 }
 
 
-.listing_detail{
-
+// ========================
+// Listing Detail Style
+// ========================
+.listing_detail {
   margin-bottom: 50px;
 
-  .thumbnail{
+  .thumbnail {
     margin-bottom: 40px;
   }
 
-  .specs{
+  .specs {
     margin-bottom: 25px;
-    .list-group{
-      .list-group-item{
+    .list-group {
+      .list-group-item {
         border: 0px;
         padding: 0px;
         margin-bottom: 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        span{
-          &:first-child{
+        span {
+          &:first-child {
             font-weight: 500;
           }
         }
@@ -295,3 +323,21 @@ footer {
     }
   }
 }
+
+.authPage {
+  margin: 50px 0;
+  form {
+    margin-top: 20px;
+  }
+
+  .authLinks{
+    margin-top: 20px;
+    font-size: 14px;
+    color: $metaColor;
+    text-align: center;
+    a{
+      text-decoration: none;
+    }
+  }
+}
+

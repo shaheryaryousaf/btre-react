@@ -6,9 +6,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 // Import Libraries
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const submit = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="authPage">
       <Container>
@@ -24,7 +30,9 @@ const Register = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" />
               </Form.Group>
-              <Button className="btn btn-primary btn-md w-100">Login</Button>
+              <Button className="btn btn-primary btn-md w-100" onClick={submit}>
+                Login
+              </Button>
             </Form>
 
             <div className="authLinks">

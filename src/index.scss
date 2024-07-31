@@ -225,7 +225,6 @@ footer {
   }
 }
 
-
 // ========================
 // Simple Page Styles
 // ========================
@@ -243,7 +242,6 @@ footer {
     }
   }
 }
-
 
 // ========================
 // CTA Section Style
@@ -263,7 +261,6 @@ footer {
     margin-bottom: 22px;
   }
 }
-
 
 // ========================
 // Realtors List Style
@@ -292,7 +289,6 @@ footer {
     justify-content: center;
   }
 }
-
 
 // ========================
 // Listing Detail Style
@@ -330,14 +326,53 @@ footer {
     margin-top: 20px;
   }
 
-  .authLinks{
+  .authLinks {
     margin-top: 20px;
     font-size: 14px;
     color: $metaColor;
     text-align: center;
-    a{
+    a {
       text-decoration: none;
     }
   }
 }
 
+// ========================
+// Dashbaord Pages Style
+// ========================
+.dashboradPage {
+  padding: 50px 0;
+}
+
+// ========================
+// Listing Detail Style
+// ========================
+.records_data {
+  margin-top: 30px;
+}
+
+// ========================
+// Custom Table Style
+// ========================
+.custom_table {
+  border: 1px solid #eee;
+  thead {
+    tr {
+      th {
+        background-color: #eee !important;
+
+        padding: 12px 0 12px 12px;
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 12px 0 12px 12px;
+        font-size: 15px;
+      }
+    }
+  }
+}

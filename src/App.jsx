@@ -8,7 +8,8 @@ import Listings from "./screens/Listings.jsx";
 import ListingDetail from "./screens/ListingDetail.jsx";
 import Register from "./screens/Register.jsx";
 import Login from "./screens/Login.jsx";
-import Dashboard from "./screens/Dashboard.jsx";
+import Dashboard from "./screens/dashboard/Dashboard.jsx";
+import ListingsData from "./screens/dashboard/ListingsData.jsx";
 
 // Import LIbraries
 import { Routes, Route } from "react-router-dom";
@@ -77,6 +78,26 @@ const App = () => {
         element={
           <Layout>
             <Dashboard />
+          </Layout>
+        }
+      />
+
+      {/* Listings Data Page */}
+      <Route
+        path="/dashboard/listings"
+        element={
+          <Layout>
+            <ListingsData />
+          </Layout>
+        }
+      />
+
+      {/* Add New Listings Page */}
+      <Route
+        path="/dashboard/listings/add"
+        element={
+          <Layout>
+            <ListingsData />
           </Layout>
         }
       />

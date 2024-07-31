@@ -25,60 +25,42 @@ const AddRealtor = () => {
             <Col lg={7}>
               <Form className="custom_form">
                 <Form.Group className="mb-3">
-                  <Form.Label>Title</Form.Label>
+                  <Form.Label>Name</Form.Label>
                   <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Street Address</Form.Label>
+                  <Form.Label>Phone</Form.Label>
                   <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>City</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>State</Form.Label>
+                  <Form.Label>Facebook Link</Form.Label>
                   <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Label>Linkedin Link</Form.Label>
                   <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Asking Price</Form.Label>
-                  <Form.Control type="number" />
+                  <Form.Label>Instagram Link</Form.Label>
+                  <Form.Control />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Square Feet</Form.Label>
-                  <Form.Control type="number" />
+                  <Form.Label>Profile Photo</Form.Label>
+                  <Form.Control type="file" />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Bedrooms</Form.Label>
-                  <Form.Control type="number" />
+                  <Form.Label>Bio</Form.Label>
+                  <Form.Control as="textarea" rows="4" />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Bathrooms</Form.Label>
-                  <Form.Control type="number" />
+                  <Form.Label>Is MVP</Form.Label>
+                  <Form.Check type="checkbox" />
                 </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Garage</Form.Label>
-                  <Form.Control type="number" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Lot Size</Form.Label>
-                  <Form.Control type="number" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Realtor</Form.Label>
-                  <Form.Select>
-                    <option>Jenny Johnson</option>
-                    <option>Mark hudson</option>
-                    <option>Kyle Brown</option>
-                  </Form.Select>
-                </Form.Group>
-                <Button className="btn btn-primary btn-md">
-                  Save Listings
-                </Button>
+                <Button className="btn btn-primary btn-md">Save Realtor</Button>
               </Form>
             </Col>
           </Row>

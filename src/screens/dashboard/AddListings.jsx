@@ -94,6 +94,18 @@ const AddListings = () => {
                   </Col>
                 </Row>
 
+                <Row className="mb-3">
+                  <Col lg={6}>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control type="file" />
+                  </Col>
+                </Row>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={4} />
+                </Form.Group>
+
                 <Button className="btn btn-primary btn-md">
                   Save Listings
                 </Button>

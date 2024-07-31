@@ -12,7 +12,7 @@ import { FaRegEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 // Import Dummy Data
-import { listingsData } from "../../dummyData";
+import { listingsData, realtorsData } from "../../dummyData";
 
 const Dashboard = () => {
   return (
@@ -104,21 +104,19 @@ const Dashboard = () => {
                 <thead>
                   <tr>
                     <th>Sr. No</th>
-                    <th>Address</th>
-                    <th>Asking Price</th>
-                    <th>Realtor</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {listingsData.map((l, index) => (
+                  {realtorsData.map((r, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>
-                        {l.address} {l.city}, {l.city}
-                      </td>
-                      <td>{l.price}</td>
-                      <td>Jenny Johnson</td>
+                      <td>{r.name}</td>
+                      <td>{r.phone}</td>
+                      <td>{r.email}</td>
                       <td>
                         <FaRegEye color="gray" title="View Detail" />
                       </td>

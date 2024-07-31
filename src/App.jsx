@@ -10,6 +10,7 @@ import Register from "./screens/Register.jsx";
 import Login from "./screens/Login.jsx";
 import Dashboard from "./screens/dashboard/Dashboard.jsx";
 import ListingsData from "./screens/dashboard/ListingsData.jsx";
+import AddListings from "./screens/dashboard/AddListings.jsx";
 
 // Import LIbraries
 import { Routes, Route } from "react-router-dom";
@@ -97,7 +98,7 @@ const App = () => {
         path="/dashboard/listings/add"
         element={
           <Layout>
-            <ListingsData />
+            <AddListings />
           </Layout>
         }
       />

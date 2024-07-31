@@ -11,6 +11,8 @@ import Login from "./screens/Login.jsx";
 import Dashboard from "./screens/dashboard/Dashboard.jsx";
 import ListingsData from "./screens/dashboard/ListingsData.jsx";
 import AddListings from "./screens/dashboard/AddListings.jsx";
+import Realtors from "./screens/dashboard/Realtors.jsx";
+import AddRealtor from "./screens/dashboard/AddRealtor.jsx";
 
 // Import LIbraries
 import { Routes, Route } from "react-router-dom";
@@ -99,6 +101,26 @@ const App = () => {
         element={
           <Layout>
             <AddListings />
+          </Layout>
+        }
+      />
+
+      {/* Realtors List Page */}
+      <Route
+        path="/dashboard/realtors"
+        element={
+          <Layout>
+            <Realtors />
+          </Layout>
+        }
+      />
+
+      {/* Add New Realtor Page */}
+      <Route
+        path="/dashboard/realtors/add"
+        element={
+          <Layout>
+            <AddRealtor />
           </Layout>
         }
       />

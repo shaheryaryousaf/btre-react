@@ -120,3 +120,36 @@ export const listingsData = [
     featured_image: "/images/home-6.jpg",
   },
 ];
+
+export const realtorsData = [
+  {
+    id: 1,
+    name: "Jenny Johnson",
+    phone: "(333)-333-3333",
+    email: "jenny@example.com",
+    bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia recusandae esse reiciendis officia omnis non rerum dicta cupiditate nostrum molestias deserunt aut minus inventore animi atque, consequuntur ad fugit. Possimus culpa blanditiis repellendus ipsa similique ullam, natus error dolor harum.",
+    facebookLink: "https://facebook.com",
+    linkdeinLink: "https://linkdein.com",
+    instagramLink: "https://instagram.com",
+  },
+  {
+    id: 2,
+    name: "Mark Hudson",
+    phone: "(444)-444-4444",
+    email: "mark@example.com",
+    bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia recusandae esse reiciendis officia omnis non rerum dicta cupiditate nostrum molestias deserunt aut minus inventore animi atque, consequuntur ad fugit. Possimus culpa blanditiis repellendus ipsa similique ullam, natus error dolor harum.",
+    facebookLink: "https://facebook.com",
+    linkdeinLink: "https://linkdein.com",
+    instagramLink: "https://instagram.com",
+  },
+  {
+    id: 3,
+    name: "Kyle Brown",
+    phone: "(555)-555-5555",
+    email: "kyle@example.com",
+    bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia recusandae esse reiciendis officia omnis non rerum dicta cupiditate nostrum molestias deserunt aut minus inventore animi atque, consequuntur ad fugit. Possimus culpa blanditiis repellendus ipsa similique ullam, natus error dolor harum.",
+    facebookLink: "https://facebook.com",
+    linkdeinLink: "https://linkdein.com",
+    instagramLink: "https://instagram.com",
+  },
+];

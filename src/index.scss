@@ -30,6 +30,10 @@ textarea {
   font-size: 14px !important;
 }
 
+a{
+  text-decoration: none !important;
+}
+
 // ========================
 // Topbar
 // ========================
@@ -373,6 +377,33 @@ footer {
         padding: 12px 0 12px 12px;
         font-size: 15px;
       }
+
+      svg{
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// ========================
+// Custom Modal Style
+// ========================
+.custom_modal{
+  .modal-body{
+    padding: 24px;
+
+    h5{
+      font-size: 18px !important;
+      margin-bottom: 14px !important;
+    }
+
+    .btn{
+      padding: 7px 15px !important;
+    }
+
+    .btn-danger{
+      background-color: #f06548 !important;
+      border-color: #f06548 !important;
     }
   }
 }

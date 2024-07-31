@@ -1,11 +1,16 @@
+import { useState } from "react";
+
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 
+// Import Components
+import DeleteModal from "../../components/DeleteModal";
+
 // Import Icons
-import { FaRegEye } from "react-icons/fa";
+import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 
 // Import Libraries
 import { Link } from "react-router-dom";
@@ -14,17 +19,32 @@ import { Link } from "react-router-dom";
 import { listingsData } from "../../dummyData";
 
 const ListingsData = () => {
+  /*
+    Realtor Delete Modal
+    */
+  const [deleteModal, setDeleteModal] = useState(false);
+  const deleteModalClose = () => setDeleteModal(false);
+  const deleteModalShow = () => setDeleteModal(true);
+
   return (
     <div className="dashboradPage">
       <Container>
         {/* Page Top */}
         <Row>
-          <Col lg={12} className="d-flex justify-content-between align-items-start">
+          <Col
+            lg={12}
+            className="d-flex justify-content-between align-items-start"
+          >
             <div>
               <h2>Listings</h2>
               <p>You can see all listings here</p>
             </div>
-            <Link to="/dashboard/listings/add" className="btn btn-md btn-primary">Add New Listing</Link>
+            <Link
+              to="/dashboard/listings/add"
+              className="btn btn-md btn-primary"
+            >
+              Add New Listing
+            </Link>
           </Col>
         </Row>
 
@@ -52,7 +72,13 @@ const ListingsData = () => {
                       <td>{l.price}</td>
                       <td>Jenny Johnson</td>
                       <td>
-                        <FaRegEye color="gray" title="View Detail" />
+                        <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                        &nbsp;
+                        <FaTrashAlt
+                          color="gray"
+                          title="View Detail"
+                          onClick={deleteModalShow}
+                        />
                       </td>
                     </tr>
                   ))}
@@ -62,6 +88,12 @@ const ListingsData = () => {
           </Row>
         </div>
       </Container>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        deleteModalClose={deleteModalClose}
+      />
     </div>
   );
 };

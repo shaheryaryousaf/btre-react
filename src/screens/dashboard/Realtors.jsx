@@ -1,11 +1,16 @@
+import { useState } from "react";
+
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 
+// Import Components
+import DeleteModal from "../../components/DeleteModal";
+
 // Import Icons
-import { FaRegEye } from "react-icons/fa";
+import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 
 // Import Libraries
 import { Link } from "react-router-dom";
@@ -14,6 +19,13 @@ import { Link } from "react-router-dom";
 import { realtorsData } from "../../dummyData";
 
 const Realtors = () => {
+  /*
+    Realtor Delete Modal
+    */
+  const [deleteModal, setDeleteModal] = useState(false);
+  const deleteModalClose = () => setDeleteModal(false);
+  const deleteModalShow = () => setDeleteModal(true);
+
   return (
     <div className="dashboradPage">
       <Container>
@@ -58,7 +70,13 @@ const Realtors = () => {
                       <td>{r.phone}</td>
                       <td>{r.email}</td>
                       <td>
-                        <FaRegEye color="gray" title="View Detail" />
+                        <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                        &nbsp;
+                        <FaTrashAlt
+                          color="gray"
+                          title="View Detail"
+                          onClick={deleteModalShow}
+                        />
                       </td>
                     </tr>
                   ))}
@@ -68,6 +86,12 @@ const Realtors = () => {
           </Row>
         </div>
       </Container>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        deleteModal={deleteModal}
+        deleteModalClose={deleteModalClose}
+      />
     </div>
   );
 };

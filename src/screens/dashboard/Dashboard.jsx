@@ -5,9 +5,6 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
 
-// Import Icons
-import { FaRegEye } from "react-icons/fa";
-
 // Import Libraries
 import { Link } from "react-router-dom";
 
@@ -69,7 +66,6 @@ const Dashboard = () => {
                     <th>Address</th>
                     <th>Asking Price</th>
                     <th>Realtor</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,9 +77,6 @@ const Dashboard = () => {
                       </td>
                       <td>{l.price}</td>
                       <td>Jenny Johnson</td>
-                      <td>
-                        <FaRegEye color="gray" title="View Detail" />
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -107,7 +100,6 @@ const Dashboard = () => {
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,9 +109,6 @@ const Dashboard = () => {
                       <td>{r.name}</td>
                       <td>{r.phone}</td>
                       <td>{r.email}</td>
-                      <td>
-                        <FaRegEye color="gray" title="View Detail" />
-                      </td>
                     </tr>
                   ))}
                 </tbody>

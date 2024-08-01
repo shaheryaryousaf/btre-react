@@ -23,27 +23,27 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     price: {
-      type: number,
+      type: Number,
       required: true,
     },
     bedrooms: {
-      type: number,
+      type: Number,
       required: true,
     },
     bathrooms: {
-      type: number,
+      type: Number,
       required: true,
     },
     garage: {
-      type: number,
+      type: Number,
       required: true,
     },
     square_feet: {
-      type: number,
+      type: Number,
       required: true,
     },
     lot_size: {
-      type: number,
+      type: Number,
       required: true,
     },
     image: {

@@ -55,6 +55,16 @@ const listingSchema = new mongoose.Schema(
       required: false,
       default: "",
     },
+    realtor: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Realtor",
+    },
+    addedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Account",
+    },
   },
   {
     timestamps: true,

@@ -50,6 +50,7 @@ const addNewListing = asyncHandler(async (req, res) => {
     lot_size,
     image,
     description,
+    realtor,
   } = req.body;
 
   const listing = await Listing.create({
@@ -66,6 +67,8 @@ const addNewListing = asyncHandler(async (req, res) => {
     lot_size,
     image,
     description,
+    realtor,
+    addedBy: req.user._id,
   });
 
   try {
@@ -117,6 +120,7 @@ const updateListing = asyncHandler(async (req, res) => {
     lot_size,
     image,
     description,
+    realtor,
   } = req.body;
 
   const listing = await Listing.findOne({
@@ -128,55 +132,29 @@ const updateListing = asyncHandler(async (req, res) => {
     throw new Error("No listing found.");
   }
 
-  if (
-    title === "" ||
-    street_address === "" ||
-    city === "" ||
-    state === "" ||
-    zip === "" ||
-    price === "" ||
-    bedrooms === "" ||
-    bathrooms === "" ||
-    garage === "" ||
-    square_feet === "" ||
-    lot_size === "" ||
-    image === "" ||
-    description === ""
-  ) {
-    res.status(400);
-    throw new Error("Please fill all required fields");
-  } else {
-    listing.title = title !== "" && title ? title : listing.title;
-    listing.street_address =
-      street_address !== "" && street_address
-        ? street_address
-        : listing.street_address;
-    listing.city = city !== "" && city ? city : listing.city;
-    listing.state = state !== "" && state ? state : listing.state;
-    listing.zip = zip !== "" && zip ? zip : listing.zip;
-    listing.price = price !== "" && price ? price : listing.price;
-    listing.bedrooms =
-      bedrooms !== "" && bedrooms ? bedrooms : listing.bedrooms;
-    listing.bathrooms =
-      bathrooms !== "" && bathrooms ? bathrooms : listing.bathrooms;
-    listing.garage = garage !== "" && garage ? garage : listing.garage;
-    listing.square_feet =
-      square_feet !== "" && square_feet ? square_feet : listing.square_feet;
-    listing.lot_size =
-      lot_size !== "" && lot_size ? lot_size : listing.lot_size;
-    listing.image = image !== "" && image ? image : listing.image;
-    listing.description =
-      description !== "" && description ? description : listing.description;
+  listing.title = title;
+  listing.street_address = street_address;
+  listing.city = city;
+  listing.state = state;
+  listing.zip = zip;
+  listing.price = price;
+  listing.bedrooms = bedrooms;
+  listing.bathrooms = bathrooms;
+  listing.garage = garage;
+  listing.square_feet = square_feet;
+  listing.lot_size = lot_size;
+  listing.image = image;
+  listing.description = description;
+  listing.realtor = realtor;
 
-    try {
-      listing.save();
-      res
-        .status(200)
-        .json({ message: "Listing has been updated", data: listing });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Failed to update listing" });
-    }
+  try {
+    const saveListing = await listing.save();
+    res
+      .status(200)
+      .json({ message: "Listing has been updated", data: saveListing });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to update listing" });
   }
 });
 

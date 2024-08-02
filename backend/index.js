@@ -11,6 +11,7 @@ import connectDB from "./config/db.js";
 
 // Import Routes
 import listingRoutes from "./routes/listingRoutes.js";
+import realtorRoutes from "./routes/realtorRoutes.js";
 
 connectDB(); // Database Conncection Object
 const app = express();
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/listing", listingRoutes);
+app.use("/api/realtor", realtorRoutes);
 
 const PORT = process.env.PORT || 8000;
 

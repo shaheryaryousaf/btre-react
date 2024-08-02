@@ -78,9 +78,9 @@ const addNewListing = asyncHandler(async (req, res) => {
 });
 
 // ====================================
-// Delete Listing - Company
+// Delete Listing
 // ====================================
-const deleteListingCompany = asyncHandler(async (req, res) => {
+const deleteListing = asyncHandler(async (req, res) => {
   try {
     const result = await Listing.deleteOne({
       _id: req.params.id,
@@ -184,6 +184,6 @@ export {
   getAllListings,
   getSingleListing,
   addNewListing,
-  deleteListingCompany,
+  deleteListing,
   updateListing,
 };

@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { protect } from "../middleware/authMiddleware.js";
 
 import {
   getAllRealtors,
@@ -11,8 +12,8 @@ import {
 
 router.route("/all").get(getAllRealtors);
 router.route("/:id").get(getSingleRealtor);
-router.route("/add").post(addNewRealtor);
-router.route("/:id").delete(deleteRealtor);
-router.route("/:id").put(updateRealtor);
+router.route("/add").post(protect, addNewRealtor);
+router.route("/:id").delete(protect, deleteRealtor);
+router.route("/:id").put(protect, updateRealtor);
 
 export default router;

@@ -10,6 +10,7 @@ import bodyParser from "body-parser";
 import connectDB from "./config/db.js";
 
 // Import Routes
+import accountRoutes from "./routes/accountRoutes.js";
 import listingRoutes from "./routes/listingRoutes.js";
 import realtorRoutes from "./routes/realtorRoutes.js";
 
@@ -19,6 +20,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/api/auth", accountRoutes);
 app.use("/api/listing", listingRoutes);
 app.use("/api/realtor", realtorRoutes);
 

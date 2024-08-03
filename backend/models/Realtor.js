@@ -28,6 +28,11 @@ const realtorSchema = new mongoose.Schema(
       required: true,
       default: "no",
     },
+    addedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Account",
+    },
   },
   {
     timestamps: true,

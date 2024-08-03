@@ -1,5 +1,20 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Realtor from "../models/Realtor.js";
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.js";
+
+// Configure multer storage for Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "listings", // Optional: specify a folder in your Cloudinary account
+    allowed_formats: ["jpg", "png", "jpeg"],
+    transformation: [{ width: 800, height: 600, crop: "limit" }],
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // ====================================
 // Get All Realtors
@@ -36,18 +51,26 @@ const getSingleRealtor = asyncHandler(async (req, res) => {
 // Add New Realtor
 // ====================================
 const addNewRealtor = asyncHandler(async (req, res) => {
-  const { name, email, phone_number, image, bio, is_mvp } = req.body;
+  const { name, email, phone_number, bio, is_mvp } = req.body;
 
-  const realtor = await Realtor.create({
-    name,
-    email,
-    phone_number,
-    image,
-    bio,
-    is_mvp,
-  });
+  // Check if file is uploaded
+  if (!req.file) {
+    return res.status(400).json({ error: "Image is required" });
+  }
+
+  const image = req.file.path; // Get image path from Cloudinary
 
   try {
+    const realtor = await Realtor.create({
+      name,
+      email,
+      phone_number,
+      bio,
+      image,
+      is_mvp,
+      addedBy: req.user._id,
+    });
+
     const savedListing = await realtor.save();
     res.status(200).json({ message: "New realtor has been saved" });
   } catch (error) {
@@ -82,44 +105,43 @@ const deleteRealtor = asyncHandler(async (req, res) => {
 // Update Realtor
 // ====================================
 const updateRealtor = asyncHandler(async (req, res) => {
-  const { name, email, phone_number, image, bio, is_mvp } = req.body;
+  const { name, email, phone_number, bio, is_mvp } = req.body;
 
-  const realtor = await Realtor.findOne({
-    _id: req.params.id,
-  });
-
-  if (!realtor) {
-    res.status(400);
-    throw new Error("No realtor found.");
-  }
-
-  if (
-    name === "" ||
-    email === "" ||
-    phone_number === "" ||
-    email === "" ||
-    image === "" ||
-    is_mvp === ""
-  ) {
-    res.status(400);
-    throw new Error("Please fill all required fields");
-  } else {
-    realtor.name = name !== "" && name ? name : realtor.name;
-    realtor.email = email !== "" && email ? email : realtor.email;
-    realtor.phone_number = phone_number !== "" && phone_number ? phone_number : realtor.phone_number;
-    realtor.image = image !== "" && image ? image : realtor.image;
-    realtor.bio = bio !== "" && bio ? bio : realtor.bio;
-    realtor.is_mvp = is_mvp !== "" && is_mvp ? is_mvp : realtor.is_mvp;
-
-    try {
-      realtor.save();
-      res
-        .status(200)
-        .json({ message: "Realtor has been updated", data: realtor });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Failed to update realtor" });
+  try {
+    // Check if a new image is uploaded
+    let image;
+    if (req.file) {
+      image = req.file.path; // Get image path from Cloudinary
     }
+
+    // Use findByIdAndUpdate to update the listing
+    const updatedRealtor = await Realtor.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          name,
+          email,
+          phone_number,
+          bio,
+          is_mvp,
+          image,
+        },
+      },
+      { new: true, runValidators: true } // Options to return the updated document and run validators
+    );
+
+    if (!updatedRealtor) {
+      res.status(404); // Use 404 status for not found
+      throw new Error("No realtor found.");
+    }
+
+    res.status(200).json({
+      message: "Realtor has been updated",
+      data: updatedRealtor,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update listing" });
   }
 });
 
@@ -129,4 +151,5 @@ export {
   addNewRealtor,
   deleteRealtor,
   updateRealtor,
+  upload,
 };

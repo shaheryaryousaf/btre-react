@@ -1,5 +1,20 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Listing from "../models/Listing.js";
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.js";
+
+// Configure multer storage for Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "listings", // Optional: specify a folder in your Cloudinary account
+    allowed_formats: ["jpg", "png", "jpeg"],
+    transformation: [{ width: 800, height: 600, crop: "limit" }],
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // ====================================
 // Get All Listings
@@ -48,35 +63,42 @@ const addNewListing = asyncHandler(async (req, res) => {
     garage,
     square_feet,
     lot_size,
-    image,
     description,
     realtor,
   } = req.body;
 
-  const listing = await Listing.create({
-    title,
-    street_address,
-    city,
-    state,
-    zip,
-    price,
-    bedrooms,
-    bathrooms,
-    garage,
-    square_feet,
-    lot_size,
-    image,
-    description,
-    realtor,
-    addedBy: req.user._id,
-  });
+  // Check if file is uploaded
+  if (!req.file) {
+    return res.status(400).json({ error: "Image is required" });
+  }
+
+  const image = req.file.path; // Get image path from Cloudinary
 
   try {
-    const savedListing = await listing.save();
-    res.status(200).json({ message: "New listing has been saved" });
+    const listing = await Listing.create({
+      title,
+      street_address,
+      city,
+      state,
+      zip,
+      price,
+      bedrooms,
+      bathrooms,
+      garage,
+      square_feet,
+      lot_size,
+      image, // Store Cloudinary image URL
+      description,
+      realtor,
+      addedBy: req.user._id,
+    });
+
+    res
+      .status(200)
+      .json({ message: "New listing has been saved", data: listing });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Error adding employee" });
+    res.status(500).json({ error: "Error adding listing" });
   }
 });
 
@@ -118,42 +140,52 @@ const updateListing = asyncHandler(async (req, res) => {
     garage,
     square_feet,
     lot_size,
-    image,
     description,
     realtor,
   } = req.body;
 
-  const listing = await Listing.findOne({
-    _id: req.params.id,
-  });
-
-  if (!listing) {
-    res.status(400);
-    throw new Error("No listing found.");
-  }
-
-  listing.title = title;
-  listing.street_address = street_address;
-  listing.city = city;
-  listing.state = state;
-  listing.zip = zip;
-  listing.price = price;
-  listing.bedrooms = bedrooms;
-  listing.bathrooms = bathrooms;
-  listing.garage = garage;
-  listing.square_feet = square_feet;
-  listing.lot_size = lot_size;
-  listing.image = image;
-  listing.description = description;
-  listing.realtor = realtor;
-
   try {
-    const saveListing = await listing.save();
-    res
-      .status(200)
-      .json({ message: "Listing has been updated", data: saveListing });
+    // Check if a new image is uploaded
+    let image;
+    if (req.file) {
+      image = req.file.path; // Get image path from Cloudinary
+    }
+
+    // Use findByIdAndUpdate to update the listing
+    const updatedListing = await Listing.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          title,
+          street_address,
+          city,
+          state,
+          zip,
+          price,
+          bedrooms,
+          bathrooms,
+          garage,
+          square_feet,
+          lot_size,
+          image,
+          description,
+          realtor,
+        },
+      },
+      { new: true, runValidators: true } // Options to return the updated document and run validators
+    );
+
+    if (!updatedListing) {
+      res.status(404); // Use 404 status for not found
+      throw new Error("No listing found.");
+    }
+
+    res.status(200).json({
+      message: "Listing has been updated",
+      data: updatedListing,
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Failed to update listing" });
   }
 });
@@ -164,4 +196,5 @@ export {
   addNewListing,
   deleteListing,
   updateListing,
+  upload,
 };

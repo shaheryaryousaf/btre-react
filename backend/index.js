@@ -16,6 +16,7 @@ import realtorRoutes from "./routes/realtorRoutes.js";
 
 connectDB(); // Database Conncection Object
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

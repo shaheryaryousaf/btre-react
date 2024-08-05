@@ -30,7 +30,7 @@ textarea {
   font-size: 14px !important;
 }
 
-a{
+a {
   text-decoration: none !important;
 }
 
@@ -302,6 +302,10 @@ footer {
 
   .thumbnail {
     margin-bottom: 40px;
+    img {
+      width: 100% !important;
+      height: 50vh !important;
+    }
   }
 
   .specs {
@@ -378,7 +382,7 @@ footer {
         font-size: 15px;
       }
 
-      svg{
+      svg {
         cursor: pointer;
       }
     }
@@ -388,20 +392,20 @@ footer {
 // ========================
 // Custom Modal Style
 // ========================
-.custom_modal{
-  .modal-body{
+.custom_modal {
+  .modal-body {
     padding: 24px;
 
-    h5{
+    h5 {
       font-size: 18px !important;
       margin-bottom: 14px !important;
     }
 
-    .btn{
+    .btn {
       padding: 7px 15px !important;
     }
 
-    .btn-danger{
+    .btn-danger {
       background-color: #f06548 !important;
       border-color: #f06548 !important;
     }

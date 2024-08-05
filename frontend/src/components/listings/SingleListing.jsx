@@ -22,7 +22,7 @@ const SingleListing = ({ l }) => {
   return (
     <Col lg={4} className="mb-3">
       <Card className="single_listing">
-        <Card.Img variant="top" src={l.featured_image} />
+        <Card.Img variant="top" src={l.image} />
         <Card.Body>
           <Card.Title className="text-center">{l.address}</Card.Title>
           <Card.Text className="text-center">
@@ -48,7 +48,7 @@ const SingleListing = ({ l }) => {
             </Col>
           </Row>
           <Link
-            to="/listings/1"
+            to={`/listings/${l._id}`}
             className="btn w-100"
             style={{ color: "white" }}
           >

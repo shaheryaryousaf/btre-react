@@ -22,6 +22,7 @@ const upload = multer({ storage: storage });
 const getAllListings = asyncHandler(async (req, res) => {
   const { page = 1, limit = 50 } = req.query;
   const listings = await Listing.find({})
+    .populate("realtor", "name")
     .sort({ createdAt: -1 }) // sorting here
     .skip((page - 1) * limit)
     .limit(limit)
@@ -39,7 +40,10 @@ const getAllListings = asyncHandler(async (req, res) => {
 // Get Single Listing
 // ====================================
 const getSingleListing = asyncHandler(async (req, res) => {
-  const listing = await Listing.findById(req.params.id).lean();
+  const listing = await Listing.findById(req.params.id).populate(
+    "realtor",
+    "name image"
+  );
   if (!listing) {
     res.status(401);
     throw new Error("Listing doens't Exist");

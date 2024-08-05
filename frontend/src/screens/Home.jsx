@@ -1,3 +1,13 @@
+import { useEffect } from "react";
+
+// Import Redux Stuff
+import {
+  getAllListings,
+  allListings,
+  listingsStatus,
+} from "../api/listingApiSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,10 +21,15 @@ import SingleListing from "../components/listings/SingleListing.jsx";
 // Import Icons
 import { FaComment, FaHome, FaBriefcase } from "react-icons/fa";
 
-// Import Dummy Data
-import { listingsData } from "../dummyData.js";
-
 const Home = () => {
+  const dispatch = useDispatch();
+  const listings = useSelector(allListings);
+  const listingsLoading = useSelector(listingsStatus);
+
+  useEffect(() => {
+    dispatch(getAllListings());
+  }, [dispatch]);
+
   return (
     <>
       {/* Search Form */}
@@ -148,11 +163,15 @@ const Home = () => {
               <h2>Latest Listings</h2>
             </Col>
           </Row>
-          <Row>
-            {listingsData.map((l, index) => (
-              <SingleListing key={index} l={l} />
-            ))}
-          </Row>
+          {listingsLoading === "loading" ? (
+            "Loading... "
+          ) : (
+            <Row>
+              {listings.map((l, index) => (
+                <SingleListing key={index} l={l} />
+              ))}
+            </Row>
+          )}
         </Container>
       </section>
 

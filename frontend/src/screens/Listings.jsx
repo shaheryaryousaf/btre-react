@@ -1,3 +1,15 @@
+import { useEffect } from "react";
+
+// Import Redux Hooks
+import { useDispatch, useSelector } from "react-redux";
+
+// Import Redux Actions and Selectors
+import {
+  getAllListings,
+  allListings,
+  listingsStatus,
+} from "../api/listingApiSlice.js";
+
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,13 +22,17 @@ import SingleListing from "../components/listings/SingleListing";
 // Import Libraries
 import { Link } from "react-router-dom";
 
-// Import Dummy Data
-import { listingsData } from "../dummyData.js";
-
-// Import Icons
-import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-
 const Listings = () => {
+  const dispatch = useDispatch();
+  const listings = useSelector(allListings);
+  const listingStatus = useSelector(listingsStatus);
+
+  useEffect(() => {
+    if (listingStatus === "idle") {
+      dispatch(getAllListings({ page: 1 }));
+    }
+  }, [dispatch, listingStatus]);
+
   return (
     <>
       <section className="pageTop">
@@ -48,9 +64,15 @@ const Listings = () => {
       <section className="listings_section">
         <Container className="py-3">
           <Row>
-            {listingsData.map((l, index) => (
-              <SingleListing key={index} l={l} />
-            ))}
+            {listingStatus === "loading" ? (
+              "Loading..."
+            ) : (
+              <>
+                {listings.map((l, index) => (
+                  <SingleListing key={index} l={l} />
+                ))}
+              </>
+            )}
           </Row>
         </Container>
       </section>

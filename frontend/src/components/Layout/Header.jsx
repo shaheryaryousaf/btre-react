@@ -1,3 +1,8 @@
+import { useAuth } from "../../hooks/useAuth";
+import { logout } from "../../api/authSlice";
+import { useLogoutMutation } from "../../api/userApiSlice";
+import { useDispatch } from "react-redux";
+
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -7,10 +12,26 @@ import Navbar from "react-bootstrap/Navbar";
 import { FaUserPlus, FaSignOutAlt } from "react-icons/fa";
 
 // Import Libraries
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
 function Header() {
+  const { isLoggedIn, userInfo } = useAuth();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall(undefined).unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <header>
       <Navbar expand="lg">
@@ -36,14 +57,17 @@ function Header() {
               </LinkContainer>
             </Nav>
             <div className="auth_links hide-sm">
-              <Link to="/register" className="link">
-                <FaUserPlus />
-                <span>Register</span>
-              </Link>
-              <Link to="/login" className="link">
-                <FaSignOutAlt />
-                <span>Login</span>
-              </Link>
+              {isLoggedIn ? (
+                <span onClick={logoutHandler} className="link" style={{cursor: 'pointer'}}>
+                  <FaSignOutAlt />
+                  <span>Logout</span>
+                </span>
+              ) : (
+                <Link to="/login" className="link">
+                  <FaSignOutAlt />
+                  <span>Login</span>
+                </Link>
+              )}
             </div>
           </Navbar.Collapse>
         </Container>

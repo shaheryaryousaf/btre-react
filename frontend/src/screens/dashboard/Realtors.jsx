@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Import Redux Stuff
+import {
+  getAllRealtors,
+  allRealtors,
+  realtorsStatus,
+} from "../../api/realtorApiSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
@@ -19,6 +27,15 @@ import { Link } from "react-router-dom";
 import { realtorsData } from "../../dummyData";
 
 const Realtors = () => {
+  const dispatch = useDispatch();
+
+  const realtors = useSelector(allRealtors);
+  const realtorsLoading = useSelector(realtorsStatus);
+
+  useEffect(() => {
+    dispatch(getAllRealtors());
+  }, [dispatch]);
+
   /*
     Realtor Delete Modal
     */
@@ -63,23 +80,31 @@ const Realtors = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {realtorsData.map((r, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{r.name}</td>
-                      <td>{r.phone}</td>
-                      <td>{r.email}</td>
-                      <td>
-                        <FaPencilAlt color="gray" title="Update Realtor" />{" "}
-                        &nbsp;
-                        <FaTrashAlt
-                          color="gray"
-                          title="View Detail"
-                          onClick={deleteModalShow}
-                        />
-                      </td>
+                  {realtorsLoading === "loading" ? (
+                    <tr>
+                      <td colSpan={5}>Loading...</td>
                     </tr>
-                  ))}
+                  ) : (
+                    <>
+                      {realtors.map((r, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{r.name}</td>
+                          <td>{r.phone_number}</td>
+                          <td>{r.email}</td>
+                          <td>
+                            <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                            &nbsp;
+                            <FaTrashAlt
+                              color="gray"
+                              title="View Detail"
+                              onClick={deleteModalShow}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  )}
                 </tbody>
               </Table>
             </Col>

@@ -31,9 +31,6 @@ export const getAllRealtors = createAsyncThunk(
     try {
       const url = `/all?page=${page}`; // Use baseURL from the api instance
       const response = await api.get(url);
-
-      console.log(response);
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

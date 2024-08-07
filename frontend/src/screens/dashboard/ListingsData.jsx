@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Import Redux Stuff
+import {
+  getAllListings,
+  allListings,
+  listingsStatus,
+} from "../../api/listingApiSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // Import Bootstrap
 import Container from "react-bootstrap/Container";
@@ -14,11 +22,18 @@ import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 
 // Import Libraries
 import { Link } from "react-router-dom";
-
-// Import Dummy Data
-import { listingsData } from "../../dummyData";
+import numeral from "numeral";
 
 const ListingsData = () => {
+  const dispatch = useDispatch();
+
+  const listings = useSelector(allListings);
+  const listingsLoading = useSelector(listingsStatus);
+
+  useEffect(() => {
+    dispatch(getAllListings());
+  }, [dispatch]);
+
   /*
     Realtor Delete Modal
     */
@@ -63,25 +78,33 @@ const ListingsData = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {listingsData.map((l, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>
-                        {l.address} {l.city}, {l.city}
-                      </td>
-                      <td>{l.price}</td>
-                      <td>Jenny Johnson</td>
-                      <td>
-                        <FaPencilAlt color="gray" title="Update Realtor" />{" "}
-                        &nbsp;
-                        <FaTrashAlt
-                          color="gray"
-                          title="View Detail"
-                          onClick={deleteModalShow}
-                        />
-                      </td>
+                  {listingsLoading === "loading" ? (
+                    <tr>
+                      <td colSpan={5}>Loading...</td>
                     </tr>
-                  ))}
+                  ) : (
+                    <>
+                      {listings.map((l, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            {l.address} {l.city}, {l.city}
+                          </td>
+                          <td>${numeral(l.price).format("0,0.00")}</td>
+                          <td>{l.realtor?.name}</td>
+                          <td>
+                            <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                            &nbsp;
+                            <FaTrashAlt
+                              color="gray"
+                              title="View Detail"
+                              onClick={deleteModalShow}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </>
+                  )}
                 </tbody>
               </Table>
             </Col>

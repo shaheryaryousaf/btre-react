@@ -23,7 +23,7 @@ const initialState = {
 };
 
 // ====================================
-// Get a All Listings
+// Get All Listings
 // ====================================
 export const getAllListings = createAsyncThunk(
   "getAllListings",

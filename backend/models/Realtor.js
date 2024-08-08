@@ -18,6 +18,18 @@ const realtorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    facebook_link: {
+      type: String,
+      required: false,
+    },
+    linkedin_link: {
+      type: String,
+      required: false,
+    },
+    instagram_link: {
+      type: String,
+      required: false,
+    },
     bio: {
       type: String,
       required: false,

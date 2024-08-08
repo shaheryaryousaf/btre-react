@@ -20,19 +20,13 @@ const upload = multer({ storage: storage });
 // Get All Realtors
 // ====================================
 const getAllRealtors = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 50 } = req.query;
   const realtors = await Realtor.find({})
     .sort({ createdAt: -1 }) // sorting here
-    .skip((page - 1) * limit)
-    .limit(limit)
     .lean();
 
   if (!realtors) next({ status: 500, message: "Something went wrong" });
 
-  const totalRealtorsCount = await Realtor.countDocuments({});
-  const totalRealtorPages = Math.ceil(totalRealtorsCount / limit);
-
-  res.status(200).json({ realtors, totalRealtorPages });
+  res.status(200).json({ realtors });
 });
 
 // ====================================

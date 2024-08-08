@@ -5,6 +5,8 @@ import {
   getAllListings,
   allListings,
   listingsStatus,
+  deleteListing,
+  deleteListingStatus,
 } from "../../api/listingApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +17,7 @@ import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 
 // Import Components
+import Loader from "../../components/Loader";
 import DeleteModal from "../../components/DeleteModal";
 
 // Import Icons
@@ -30,16 +33,27 @@ const ListingsData = () => {
   const listings = useSelector(allListings);
   const listingsLoading = useSelector(listingsStatus);
 
+  const deleteLoading = useSelector(deleteListingStatus);
+
   useEffect(() => {
-    dispatch(getAllListings());
-  }, [dispatch]);
+    if (listingsLoading === "idle") {
+      dispatch(getAllListings());
+    }
+  }, [dispatch, listingsLoading]);
 
   /*
-    Realtor Delete Modal
-    */
-  const [deleteModal, setDeleteModal] = useState(false);
-  const deleteModalClose = () => setDeleteModal(false);
-  const deleteModalShow = () => setDeleteModal(true);
+   * Delete Record modal
+   */
+  const [selectDelRecord, setSelectDelRecord] = useState(null);
+  const [recordDeleteModal, setRecordDeleteModal] = useState(false);
+  const recordDeleteModalClose = () => setRecordDeleteModal(false);
+  const recordDeleteModalshow = (itemId) => {
+    setRecordDeleteModal(true);
+    setSelectDelRecord(itemId);
+  };
+
+  console.log(listingsLoading);
+  console.log(listings);
 
   return (
     <div className="dashboradPage">
@@ -67,46 +81,42 @@ const ListingsData = () => {
         <div className="records_data mt-0">
           <Row>
             <Col lg={12}>
-              <Table className="custom_table mt-3">
-                <thead>
-                  <tr>
-                    <th>Sr. No</th>
-                    <th>Address</th>
-                    <th>Asking Price</th>
-                    <th>Realtor</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {listingsLoading === "loading" ? (
+              {listingsLoading === "loading" ? (
+                <Loader />
+              ) : (
+                <Table className="custom_table mt-3">
+                  <thead>
                     <tr>
-                      <td colSpan={5}>Loading...</td>
+                      <th>Sr. No</th>
+                      <th>Address</th>
+                      <th>Asking Price</th>
+                      <th>Realtor</th>
+                      <th>Action</th>
                     </tr>
-                  ) : (
-                    <>
-                      {listings.map((l, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            {l.address} {l.city}, {l.city}
-                          </td>
-                          <td>${numeral(l.price).format("0,0.00")}</td>
-                          <td>{l.realtor?.name}</td>
-                          <td>
-                            <FaPencilAlt color="gray" title="Update Realtor" />{" "}
-                            &nbsp;
-                            <FaTrashAlt
-                              color="gray"
-                              title="View Detail"
-                              onClick={deleteModalShow}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  )}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {listings?.map((l, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          {l.address} {l.city}, {l.city}
+                        </td>
+                        <td>${numeral(l.price).format("0,0.00")}</td>
+                        <td>{l.realtor?.name}</td>
+                        <td>
+                          <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                          &nbsp;
+                          <FaTrashAlt
+                            color="gray"
+                            title="View Detail"
+                            onClick={() => recordDeleteModalshow(l._id)}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Row>
         </div>
@@ -114,8 +124,11 @@ const ListingsData = () => {
 
       {/* Delete Modal */}
       <DeleteModal
-        deleteModal={deleteModal}
-        deleteModalClose={deleteModalClose}
+        delId={selectDelRecord}
+        deleteModal={recordDeleteModal}
+        deleteModalClose={recordDeleteModalClose}
+        loading={deleteLoading}
+        delFunction={deleteListing}
       />
     </div>
   );

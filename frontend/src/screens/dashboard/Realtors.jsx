@@ -5,6 +5,8 @@ import {
   getAllRealtors,
   allRealtors,
   realtorsStatus,
+  deleteRealtor,
+  deleteRealtorStatus,
 } from "../../api/realtorApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +17,7 @@ import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 
 // Import Components
+import Loader from "../../components/Loader";
 import DeleteModal from "../../components/DeleteModal";
 
 // Import Icons
@@ -23,25 +26,30 @@ import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 // Import Libraries
 import { Link } from "react-router-dom";
 
-// Import Dummy Data
-import { realtorsData } from "../../dummyData";
-
 const Realtors = () => {
   const dispatch = useDispatch();
 
   const realtors = useSelector(allRealtors);
   const realtorsLoading = useSelector(realtorsStatus);
 
+  const deleteLoading = useSelector(deleteRealtorStatus);
+
   useEffect(() => {
-    dispatch(getAllRealtors());
+    if (realtorsLoading === "idle") {
+      dispatch(getAllRealtors());
+    }
   }, [dispatch]);
 
   /*
-    Realtor Delete Modal
-    */
-  const [deleteModal, setDeleteModal] = useState(false);
-  const deleteModalClose = () => setDeleteModal(false);
-  const deleteModalShow = () => setDeleteModal(true);
+   * Delete Record modal
+   */
+  const [selectDelRecord, setSelectDelRecord] = useState(null);
+  const [recordDeleteModal, setRecordDeleteModal] = useState(false);
+  const recordDeleteModalClose = () => setRecordDeleteModal(false);
+  const recordDeleteModalshow = (itemId) => {
+    setRecordDeleteModal(true);
+    setSelectDelRecord(itemId);
+  };
 
   return (
     <div className="dashboradPage">
@@ -69,44 +77,40 @@ const Realtors = () => {
         <div className="records_data mt-0">
           <Row>
             <Col lg={12}>
-              <Table className="custom_table mt-3">
-                <thead>
-                  <tr>
-                    <th>Sr. No</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {realtorsLoading === "loading" ? (
+              {realtorsLoading === "loading" ? (
+                <Loader />
+              ) : (
+                <Table className="custom_table mt-3">
+                  <thead>
                     <tr>
-                      <td colSpan={5}>Loading...</td>
+                      <th>Sr. No</th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Action</th>
                     </tr>
-                  ) : (
-                    <>
-                      {realtors.map((r, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{r.name}</td>
-                          <td>{r.phone_number}</td>
-                          <td>{r.email}</td>
-                          <td>
-                            <FaPencilAlt color="gray" title="Update Realtor" />{" "}
-                            &nbsp;
-                            <FaTrashAlt
-                              color="gray"
-                              title="View Detail"
-                              onClick={deleteModalShow}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  )}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {realtors.map((r, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{r.name}</td>
+                        <td>{r.phone_number}</td>
+                        <td>{r.email}</td>
+                        <td>
+                          <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                          &nbsp;
+                          <FaTrashAlt
+                            color="gray"
+                            title="View Detail"
+                            onClick={() => recordDeleteModalshow(r._id)}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Row>
         </div>
@@ -114,8 +118,11 @@ const Realtors = () => {
 
       {/* Delete Modal */}
       <DeleteModal
-        deleteModal={deleteModal}
-        deleteModalClose={deleteModalClose}
+        delId={selectDelRecord}
+        deleteModal={recordDeleteModal}
+        deleteModalClose={recordDeleteModalClose}
+        loading={deleteLoading}
+        delFunction={deleteRealtor}
       />
     </div>
   );

@@ -17,20 +17,19 @@ const initialState = {
   listing: {},
   allStatus: "idle",
   singleStatus: "idle",
+  addListingStatus: "idle",
+  deleteListingStatus: "idle",
   error: null,
-  totalListingsCount: 0,
-  totalListingPage: 0,
 };
 
 // ====================================
 // Get All Listings
 // ====================================
 export const getAllListings = createAsyncThunk(
-  "getAllListings",
-  async ({ page }, { rejectWithValue }) => {
+  "listings/getAllListings",
+  async (_, { rejectWithValue }) => {
     try {
-      const url = `/all?page=${page}`; // Use baseURL from the api instance
-      const response = await api.get(url);
+      const response = await api.get("/all");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -50,6 +49,54 @@ export const getListingDetail = createAsyncThunk(
   }
 );
 
+// ====================================
+// Add New Listing
+// ====================================
+export const addNewListing = createAsyncThunk(
+  "addNewListing",
+  async (data, { rejectWithValue }) => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const token = userInfo?.token;
+
+      if (!token) {
+        return rejectWithValue("No authentication token found");
+      }
+
+      const response = await api.post(LISTINGS_URL + "/add", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+// ====================================
+// Delete Listing
+// ====================================
+export const deleteListing = createAsyncThunk("deleteListing", async (id) => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const token = userInfo?.token;
+
+  if (!token) {
+    return rejectWithValue("No authentication token found");
+  }
+
+  await api.delete(LISTINGS_URL + `/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+});
+
 // Create a slice for listings
 const listingsSlice = createSlice({
   name: "listings",
@@ -66,8 +113,6 @@ const listingsSlice = createSlice({
       .addCase(getAllListings.fulfilled, (state, action) => {
         state.allStatus = "succeeded";
         state.listings = action.payload.listings;
-        state.totalListingsCount = action.payload.totalListingsCount;
-        state.totalListingPage = action.payload.totalListingPage;
       })
       .addCase(getAllListings.rejected, (state, action) => {
         state.allStatus = "failed";
@@ -86,6 +131,36 @@ const listingsSlice = createSlice({
       .addCase(getListingDetail.rejected, (state, action) => {
         state.singleStatus = "failed";
         state.error = action.error.message;
+      })
+      /*
+       * Add New Listing
+       */
+      .addCase(addNewListing.pending, (state) => {
+        state.addListingStatus = "loading";
+      })
+      .addCase(addNewListing.fulfilled, (state, action) => {
+        state.addListingStatus = "succeeded";
+        state.listings.push(action.payload);
+      })
+      .addCase(addNewListing.rejected, (state, action) => {
+        state.addListingStatus = "failed";
+        state.error = action.payload;
+      })
+      /*
+       * Delete Listing
+       */
+      .addCase(deleteListing.pending, (state) => {
+        state.deleteListingStatus = "loading";
+      })
+      .addCase(deleteListing.fulfilled, (state, { meta: { arg } }) => {
+        state.deleteListingStatus = "succeeded";
+        state.listings = state.listings.filter(
+          (listing) => listing._id !== arg
+        );
+      })
+      .addCase(deleteListing.rejected, (state, action) => {
+        state.deleteListingStatus = "failed";
+        state.error = action.error.message;
       });
   },
 });
@@ -95,6 +170,9 @@ export const allListings = (state) => state.listings.listings;
 export const listingsStatus = (state) => state.listings.allStatus;
 export const singleListing = (state) => state.listings.listing;
 export const singleStatus = (state) => state.listings.singleStatus;
+export const addListingStatus = (state) => state.listings.addListingStatus;
+export const deleteListingStatus = (state) =>
+  state.listings.deleteListingStatus;
 
 // Export the reducer as the default export
 export default listingsSlice.reducer;

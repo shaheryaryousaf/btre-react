@@ -1,14 +1,44 @@
+import { useDispatch } from "react-redux";
+
 // Import Bootstrap
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+// Import Libraries
+import { ToastContainer, toast } from "react-toastify";
+
 // Import Icons
 import { FaTimes } from "react-icons/fa";
 
-const DeleteModal = ({ deleteModal, deleteModalClose }) => {
+const DeleteModal = ({
+  delId,
+  deleteModal,
+  deleteModalClose,
+  loading,
+  delFunction,
+}) => {
+  const dispatch = useDispatch();
+  const handleDelete = async () => {
+    try {
+      await dispatch(delFunction(delId)).unwrap();
+      toast.success("Record has been deleted successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      toast.error(err.message || "Failed to delete the record");
+    }
+  };
+
   return (
-    <Modal show={deleteModal} onHide={deleteModalClose} centered className="custom_modal">
+    <Modal
+      show={deleteModal}
+      onHide={deleteModalClose}
+      centered
+      className="custom_modal"
+    >
+      <ToastContainer />
       <Modal.Body>
         <div className="top d-flex justify-content-between align-items-center">
           <h5 className="mb-0">Delete Record</h5>
@@ -24,11 +54,12 @@ const DeleteModal = ({ deleteModal, deleteModalClose }) => {
             </Button>
             &nbsp;
             <Button
-              type="submit"
-              className="btn-md btn-danger"
-              onClick={deleteModalClose}
+              onClick={handleDelete}
+              className="btn-md"
+              variant="danger"
+              disabled={loading === "loading"}
             >
-              Delete
+              {loading === "loading" ? "Deleting" : "Delete"}
             </Button>
           </Form.Group>
         </Form>

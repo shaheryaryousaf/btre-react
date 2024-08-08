@@ -24,7 +24,6 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import numeral from "numeral";
 
-
 const Dashboard = () => {
   const dispatch = useDispatch();
 
@@ -36,13 +35,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (listingsLoading === "idle") {
-      dispatch(getAllListings({ page: 1 }));
+      dispatch(getAllListings());
     }
   }, [dispatch, listingsLoading]);
 
   useEffect(() => {
     if (realtorsLoading === "idle") {
-      dispatch(getAllRealtors({ page: 1 }));
+      dispatch(getAllRealtors());
     }
   }, [dispatch, realtorsLoading]);
 
@@ -93,37 +92,32 @@ const Dashboard = () => {
                 <h4 className="mb-0">Listings</h4>
                 <Link to="/dashboard/listings">View All</Link>
               </div>
-              <Table className="custom_table mt-3">
-                <thead>
-                  <tr>
-                    <th>Sr. No</th>
-                    <th>Address</th>
-                    <th>Asking Price</th>
-                    <th>Realtor</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {listingsLoading === "loading" ? (
+              {listingsLoading === "loading" ? (
+                <div className="mt-3">Loading...</div>
+              ) : (
+                <Table className="custom_table mt-3">
+                  <thead>
                     <tr>
-                      <td colSpan={4}>Loading...</td>
+                      <th>Sr. No</th>
+                      <th>Address</th>
+                      <th>Asking Price</th>
+                      <th>Realtor</th>
                     </tr>
-                  ) : (
-                    <>
-                      {listings.slice(0,5).map((l, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            {l.address} {l.city}, {l.city}
-                          </td>
-                          <td>{numeral(l.price).format("0,0.00")}</td>
-                          <td>{l.realtor?.name}</td>
-                        </tr>
-                      ))}
-                    </>
-                  )}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {listings.slice(0, 5).map((l, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          {l.address} {l.city}, {l.city}
+                        </td>
+                        <td>{numeral(l.price).format("0,0.00")}</td>
+                        <td>{l.realtor?.name}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Row>
         </div>
@@ -136,34 +130,30 @@ const Dashboard = () => {
                 <h4 className="mb-0">Realtors</h4>
                 <Link to="/dashboard/realtors">View All</Link>
               </div>
-              <Table className="custom_table mt-3">
-                <thead>
-                  <tr>
-                    <th>Sr. No</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {realtorsLoading === "loading" ? (
+              {realtorsLoading === "loading" ? (
+                <div className="mt-3">Loading...</div>
+              ) : (
+                <Table className="custom_table mt-3">
+                  <thead>
                     <tr>
-                      <td colSpan={4}>Loading</td>
+                      <th>Sr. No</th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
                     </tr>
-                  ) : (
-                    <>
-                      {realtors.slice(0,5).map((r, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{r.name}</td>
-                          <td>{r.phone_number}</td>
-                          <td>{r.email}</td>
-                        </tr>
-                      ))}
-                    </>
-                  )}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {realtors.slice(0, 5).map((r, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{r.name}</td>
+                        <td>{r.phone_number}</td>
+                        <td>{r.email}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Row>
         </div>

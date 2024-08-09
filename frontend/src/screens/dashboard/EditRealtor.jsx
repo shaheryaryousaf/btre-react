@@ -39,14 +39,13 @@ const EditRealtor = () => {
 
   const realtor = useSelector(singleRealtor);
   const realtorLoading = useSelector(singleRealtorStatus);
-
   const updateLoading = useSelector(updateRealtorStatus);
 
   useEffect(() => {
-    if (realtorLoading === "idle") {
+    if (realtorId) {
       dispatch(getRealtorDetail(realtorId));
     }
-  }, [dispatch, realtorId, realtorLoading]);
+  }, [dispatch, realtorId]);
 
   useEffect(() => {
     if (realtor) {
@@ -107,93 +106,97 @@ const EditRealtor = () => {
 
         {/* Form */}
         <div className="records_data mt-0">
-          <Row>
-            <Col lg={7}>
-              <Form onSubmit={handleSubmit(onSubmit)} className="custom_form">
-                <Form.Group className="mb-3">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control {...register("name", { required: true })} />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Phone</Form.Label>
-                  <Form.Control
-                    {...register("phone_number", { required: true })}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control {...register("email", { required: true })} />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Facebook Link</Form.Label>
-                  <Form.Control
-                    {...register("facebook_link", { required: true })}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Linkedin Link</Form.Label>
-                  <Form.Control
-                    {...register("linkedin_link", { required: true })}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Instagram Link</Form.Label>
-                  <Form.Control
-                    {...register("instagram_link", { required: true })}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Profile Photo</Form.Label>
-                  <Controller
-                    control={control}
-                    name="image"
-                    render={({ field }) => (
-                      <>
-                        <Form.Control
-                          type="file"
-                          onChange={(e) => {
-                            field.onChange(e.target.files[0]); // Correctly update the file input
-                            setValue("image", e.target.files[0], {
-                              shouldValidate: true,
-                            }); // Validate immediately
-                          }}
-                        />
-                        {errors.image && (
-                          <p className="error">{errors.image.message}</p>
-                        )}
-                      </>
-                    )}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Bio</Form.Label>
-                  <Form.Control
-                    {...register("bio", { required: true })}
-                    as="textarea"
-                    rows="4"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Is MVP</Form.Label>
-                  <Form.Select {...register("is_mvp", { required: true })}>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </Form.Select>
-                </Form.Group>
-                <Button
-                  className="btn btn-primary btn-md"
-                  type="submit"
-                  disabled={updateLoading === "loading"}
-                >
-                  {updateLoading === "loading" ? "Saving..." : "Save Realtor"}
-                </Button>
-              </Form>
-            </Col>
-            <Col lg={5}>
-              <h6>Current Realtor Image:</h6>
-              <Image src={realtor.image} />
-            </Col>
-          </Row>
+          {realtorLoading === "loading" ? (
+            "Loading...."
+          ) : (
+            <Row>
+              <Col lg={7}>
+                <Form onSubmit={handleSubmit(onSubmit)} className="custom_form">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control {...register("name", { required: true })} />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                      {...register("phone_number", { required: true })}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control {...register("email", { required: true })} />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Facebook Link</Form.Label>
+                    <Form.Control
+                      {...register("facebook_link", { required: true })}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Linkedin Link</Form.Label>
+                    <Form.Control
+                      {...register("linkedin_link", { required: true })}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Instagram Link</Form.Label>
+                    <Form.Control
+                      {...register("instagram_link", { required: true })}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Profile Photo</Form.Label>
+                    <Controller
+                      control={control}
+                      name="image"
+                      render={({ field }) => (
+                        <>
+                          <Form.Control
+                            type="file"
+                            onChange={(e) => {
+                              field.onChange(e.target.files[0]); // Correctly update the file input
+                              setValue("image", e.target.files[0], {
+                                shouldValidate: true,
+                              }); // Validate immediately
+                            }}
+                          />
+                          {errors.image && (
+                            <p className="error">{errors.image.message}</p>
+                          )}
+                        </>
+                      )}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Bio</Form.Label>
+                    <Form.Control
+                      {...register("bio", { required: true })}
+                      as="textarea"
+                      rows="4"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Is MVP</Form.Label>
+                    <Form.Select {...register("is_mvp", { required: true })}>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </Form.Select>
+                  </Form.Group>
+                  <Button
+                    className="btn btn-primary btn-md"
+                    type="submit"
+                    disabled={updateLoading === "loading"}
+                  >
+                    {updateLoading === "loading" ? "Saving..." : "Save Realtor"}
+                  </Button>
+                </Form>
+              </Col>
+              <Col lg={5}>
+                <h6>Current Realtor Image:</h6>
+                <Image src={realtor.image} fluid />
+              </Col>
+            </Row>
+          )}
         </div>
       </Container>
     </div>

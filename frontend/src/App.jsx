@@ -11,6 +11,7 @@ import Login from "./screens/Login.jsx";
 import Dashboard from "./screens/dashboard/Dashboard.jsx";
 import ListingsData from "./screens/dashboard/ListingsData.jsx";
 import AddListings from "./screens/dashboard/AddListings.jsx";
+import EditListing from "./screens/dashboard/EditListing.jsx";
 import Realtors from "./screens/dashboard/Realtors.jsx";
 import AddRealtor from "./screens/dashboard/AddRealtor.jsx";
 import EditRealtor from "./screens/dashboard/EditRealtor.jsx";
@@ -104,6 +105,16 @@ const App = () => {
         element={
           <Layout>
             <AddListings />
+          </Layout>
+        }
+      />
+
+      {/* Edit Listings Page */}
+      <Route
+        path="/dashboard/listings/:id/edit"
+        element={
+          <Layout>
+            <EditListing />
           </Layout>
         }
       />

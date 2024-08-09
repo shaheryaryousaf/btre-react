@@ -19,6 +19,7 @@ const initialState = {
   singleStatus: "idle",
   addListingStatus: "idle",
   deleteListingStatus: "idle",
+  updateListingStatus: "idle",
   error: null,
 };
 
@@ -97,6 +98,36 @@ export const deleteListing = createAsyncThunk("deleteListing", async (id) => {
   });
 });
 
+// ====================================
+// Update Listing
+// ====================================
+export const updateListing = createAsyncThunk(
+  "updateListing",
+  async ({ data, id }, { rejectWithValue }) => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const token = userInfo?.token;
+
+      if (!token) {
+        return rejectWithValue("No authentication token found");
+      }
+
+      const response = await api.put(LISTINGS_URL + `/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 // Create a slice for listings
 const listingsSlice = createSlice({
   name: "listings",
@@ -147,6 +178,22 @@ const listingsSlice = createSlice({
         state.error = action.payload;
       })
       /*
+       * Update Listing
+       */
+      .addCase(updateListing.pending, (state) => {
+        state.updateListingStatus = "loading";
+      })
+      .addCase(updateListing.fulfilled, (state, action) => {
+        state.updateListingStatus = "succeeded";
+        state.listings = state.listings.map((listing) =>
+          listing._id === action.payload._id ? action.payload : listing
+        );
+      })
+      .addCase(updateListing.rejected, (state, action) => {
+        state.updateListingStatus = "failed";
+        state.error = action.payload;
+      })
+      /*
        * Delete Listing
        */
       .addCase(deleteListing.pending, (state) => {
@@ -173,6 +220,8 @@ export const singleStatus = (state) => state.listings.singleStatus;
 export const addListingStatus = (state) => state.listings.addListingStatus;
 export const deleteListingStatus = (state) =>
   state.listings.deleteListingStatus;
+export const updateListingStatus = (state) =>
+  state.listings.updateListingStatus;
 
 // Export the reducer as the default export
 export default listingsSlice.reducer;

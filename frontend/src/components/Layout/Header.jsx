@@ -49,16 +49,22 @@ function Header() {
               <LinkContainer to="/listings">
                 <Nav.Link>Featured Listing</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/register" className="hide-bg">
-                <Nav.Link>Register</Nav.Link>
-              </LinkContainer>
+              {isLoggedIn && (
+                <LinkContainer to="/dashboard">
+                  <Nav.Link>Dashboard</Nav.Link>
+                </LinkContainer>
+              )}
               <LinkContainer to="/login" className="hide-bg">
                 <Nav.Link>Login</Nav.Link>
               </LinkContainer>
             </Nav>
             <div className="auth_links hide-sm">
               {isLoggedIn ? (
-                <span onClick={logoutHandler} className="link" style={{cursor: 'pointer'}}>
+                <span
+                  onClick={logoutHandler}
+                  className="link"
+                  style={{ cursor: "pointer" }}
+                >
                   <FaSignOutAlt />
                   <span>Logout</span>
                 </span>

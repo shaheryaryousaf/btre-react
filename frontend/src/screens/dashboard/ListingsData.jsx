@@ -52,9 +52,6 @@ const ListingsData = () => {
     setSelectDelRecord(itemId);
   };
 
-  console.log(listingsLoading);
-  console.log(listings);
-
   return (
     <div className="dashboradPage">
       <Container>
@@ -65,6 +62,9 @@ const ListingsData = () => {
             className="d-flex justify-content-between align-items-start"
           >
             <div>
+              <Link className="btn btn-trans btn-sm mb-3" to="/dashboard">
+                <span>Back to Dashoard</span>
+              </Link>
               <h2>Listings</h2>
               <p>You can see all listings here</p>
             </div>
@@ -104,7 +104,9 @@ const ListingsData = () => {
                         <td>${numeral(l.price).format("0,0.00")}</td>
                         <td>{l.realtor?.name}</td>
                         <td>
-                          <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                          <Link to={`/dashboard/listings/${l._id}/edit`}>
+                            <FaPencilAlt color="gray" title="Update Listing" />
+                          </Link>
                           &nbsp;
                           <FaTrashAlt
                             color="gray"

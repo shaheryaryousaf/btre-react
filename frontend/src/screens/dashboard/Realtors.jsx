@@ -61,6 +61,9 @@ const Realtors = () => {
             className="d-flex justify-content-between align-items-start"
           >
             <div>
+              <Link className="btn btn-trans btn-sm mb-3" to="/dashboard">
+                <span>Back to Dashoard</span>
+              </Link>
               <h2>Realtors</h2>
               <p>You can see all realtors here</p>
             </div>

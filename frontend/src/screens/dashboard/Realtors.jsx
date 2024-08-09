@@ -87,6 +87,7 @@ const Realtors = () => {
                       <th>Name</th>
                       <th>Phone</th>
                       <th>Email</th>
+                      <th>Is MVP</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -97,8 +98,11 @@ const Realtors = () => {
                         <td>{r.name}</td>
                         <td>{r.phone_number}</td>
                         <td>{r.email}</td>
+                        <td>{r.is_mvp}</td>
                         <td>
-                          <FaPencilAlt color="gray" title="Update Realtor" />{" "}
+                          <Link to={`/dashboard/realtors/${r._id}/edit`}>
+                            <FaPencilAlt color="gray" title="Update Realtor" />
+                          </Link>
                           &nbsp;
                           <FaTrashAlt
                             color="gray"

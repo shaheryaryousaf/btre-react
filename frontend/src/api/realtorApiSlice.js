@@ -19,6 +19,7 @@ const initialState = {
   singleRealtorStatus: "idle",
   addRealtorStatus: "idle",
   deleteRealtorStatus: "idle",
+  updateRealtorStatus: "idle",
   error: null,
 };
 
@@ -97,6 +98,36 @@ export const deleteRealtor = createAsyncThunk("deleteRealtor", async (id) => {
   });
 });
 
+// ====================================
+// Update Realtor
+// ====================================
+export const updateRealtor = createAsyncThunk(
+  "updateRealtor",
+  async ({ data, id }, { rejectWithValue }) => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const token = userInfo?.token;
+
+      if (!token) {
+        return rejectWithValue("No authentication token found");
+      }
+
+      const response = await api.put(REALTORS_URL + `/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 // Create a slice for realtors
 const realtorsSlice = createSlice({
   name: "realtors",
@@ -132,10 +163,10 @@ const realtorsSlice = createSlice({
         state.singleRealtorStatus = "failed";
         state.error = action.error.message;
       })
-       /*
+      /*
        * Add New Realtor
        */
-       .addCase(addNewRealtor.pending, (state) => {
+      .addCase(addNewRealtor.pending, (state) => {
         state.addRealtorStatus = "loading";
       })
       .addCase(addNewRealtor.fulfilled, (state, action) => {
@@ -144,6 +175,22 @@ const realtorsSlice = createSlice({
       })
       .addCase(addNewRealtor.rejected, (state, action) => {
         state.addRealtorStatus = "failed";
+        state.error = action.payload;
+      })
+      /*
+       * Update Realtor
+       */
+      .addCase(updateRealtor.pending, (state) => {
+        state.updateRealtorStatus = "loading";
+      })
+      .addCase(updateRealtor.fulfilled, (state, action) => {
+        state.updateRealtorStatus = "succeeded";
+        state.realtors = state.realtors.map((realtor) =>
+          realtor._id === action.payload._id ? action.payload : realtor
+        );
+      })
+      .addCase(updateRealtor.rejected, (state, action) => {
+        state.updateRealtorStatus = "failed";
         state.error = action.payload;
       })
       /*
@@ -174,6 +221,8 @@ export const singleRealtorStatus = (state) =>
   state.realtors.singleRealtorStatus;
 export const deleteRealtorStatus = (state) =>
   state.realtors.deleteRealtorStatus;
+export const updateRealtorStatus = (state) =>
+  state.realtors.updateRealtorStatus;
 
 // Export the reducer as the default export
 export default realtorsSlice.reducer;

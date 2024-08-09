@@ -13,6 +13,7 @@ import ListingsData from "./screens/dashboard/ListingsData.jsx";
 import AddListings from "./screens/dashboard/AddListings.jsx";
 import Realtors from "./screens/dashboard/Realtors.jsx";
 import AddRealtor from "./screens/dashboard/AddRealtor.jsx";
+import EditRealtor from "./screens/dashboard/EditRealtor.jsx";
 
 
 
@@ -123,6 +124,16 @@ const App = () => {
         element={
           <Layout>
             <AddRealtor />
+          </Layout>
+        }
+      />
+
+      {/* Update Realtor Page */}
+      <Route
+        path="/dashboard/realtors/:id/edit"
+        element={
+          <Layout>
+            <EditRealtor />
           </Layout>
         }
       />

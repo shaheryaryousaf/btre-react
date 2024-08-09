@@ -45,7 +45,16 @@ const getSingleRealtor = asyncHandler(async (req, res) => {
 // Add New Realtor
 // ====================================
 const addNewRealtor = asyncHandler(async (req, res) => {
-  const { name, email, phone_number, bio, is_mvp } = req.body;
+  const {
+    name,
+    email,
+    phone_number,
+    facebook_link,
+    linkedin_link,
+    instagram_link,
+    bio,
+    is_mvp,
+  } = req.body;
 
   // Check if file is uploaded
   if (!req.file) {
@@ -59,6 +68,9 @@ const addNewRealtor = asyncHandler(async (req, res) => {
       name,
       email,
       phone_number,
+      facebook_link,
+      linkedin_link,
+      instagram_link,
       bio,
       image,
       is_mvp,
@@ -99,7 +111,16 @@ const deleteRealtor = asyncHandler(async (req, res) => {
 // Update Realtor
 // ====================================
 const updateRealtor = asyncHandler(async (req, res) => {
-  const { name, email, phone_number, bio, is_mvp } = req.body;
+  const {
+    name,
+    email,
+    phone_number,
+    facebook_link,
+    linkedin_link,
+    instagram_link,
+    bio,
+    is_mvp,
+  } = req.body;
 
   try {
     // Check if a new image is uploaded
@@ -116,6 +137,9 @@ const updateRealtor = asyncHandler(async (req, res) => {
           name,
           email,
           phone_number,
+          facebook_link,
+          linkedin_link,
+          instagram_link,
           bio,
           is_mvp,
           image,

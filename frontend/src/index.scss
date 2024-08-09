@@ -4,6 +4,7 @@ $whiteColor: white;
 $background1: #273c5f;
 $btnBackground: #30caa0;
 $sectionBackground: #239375;
+$lightBackground: #f3f3f3;
 
 body {
   margin: 0px;
@@ -28,6 +29,11 @@ textarea {
   border-color: $btnBackground !important;
   padding: 10px 15px !important;
   font-size: 14px !important;
+}
+
+.btn-trans{
+  background-color: $lightBackground !important;
+  border-color: $lightBackground !important;
 }
 
 a {
